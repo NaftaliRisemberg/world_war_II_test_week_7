@@ -33,10 +33,11 @@ class TargetModel(Base):
     target_type_id = Column(Integer, ForeignKey('targettypes.target_type_id'))
     target_priority = Column(Integer)
 
-    mission = relationship('MissionModel', back_populates='targets')
+#    mission = relationship('MissionModel', back_populates='targets')
 
 class MissionModel(Base):
     __tablename__ = 'missions'
+    __name__ = 'missions'
     mission_id = Column(Integer, primary_key=True)
     mission_date = Column(Date)
     airborne_aircraft = Column(Integer)
@@ -46,4 +47,4 @@ class MissionModel(Base):
     aircraft_failed = Column(Integer)
     aircraft_damaged = Column(Integer)
 
-    target = relationship('TargetModel', back_populates='missions')
+ #   target = relationship('TargetModel', back_populates='missions')
