@@ -11,13 +11,13 @@ class CityModel(Base):
     country_id = Column(Integer, ForeignKey('countries.country_id')) # מפתח זר של המדינה עיר יכולה להיות במדינה אחת לכל מדינה יש כמה ערים
     latitude = Column(Float)
     longitude = Column(Float)
-    countries = relationship("CountryModel", back_populates="cities")
+    countries = relationship('CountryModel', back_populates='cities')
 
 class CountryModel(Base):
     __tablename__ = 'countries'
     country_id = Column(Integer, primary_key=True)
     country_name = Column(String)
-    cities = relationship("CityModel", back_populates="countries")
+    cities = relationship('CityModel', back_populates='countries')
 
 class TargetTypeModel(Base):
     __tablename__ = 'targettypes'
@@ -33,6 +33,8 @@ class TargetModel(Base):
     target_type_id = Column(Integer, ForeignKey('targettypes.target_type_id'))
     target_priority = Column(Integer)
 
+    mission = relationship('MissionModel', back_populates='targets')
+
 class MissionModel(Base):
     __tablename__ = 'missions'
     mission_id = Column(Integer, primary_key=True)
@@ -43,3 +45,5 @@ class MissionModel(Base):
     aircraft_returned = Column(Integer)
     aircraft_failed = Column(Integer)
     aircraft_damaged = Column(Integer)
+
+    target = relationship('TargetModel', back_populates='missions')
