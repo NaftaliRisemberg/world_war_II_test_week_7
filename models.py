@@ -5,27 +5,27 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 class CityModel(Base):
-    _tablename_ = 'cities'
+    __tablename__ = 'cities'
     city_id = Column(Integer, primary_key=True)
     city_name = Column(String)
     country_id = Column(Integer, ForeignKey('countries.country_id')) # מפתח זר של המדינה עיר יכולה להיות במדינה אחת לכל מדינה יש כמה ערים
     latitude = Column(Float)
     longitude = Column(Float)
-    city = relationship("CityModel", back_populates="countries")
+    countries = relationship("CountryModel", back_populates="cities")
 
 class CountryModel(Base):
-    _tablename_ = 'countries'
+    __tablename__ = 'countries'
     country_id = Column(Integer, primary_key=True)
     country_name = Column(String)
     cities = relationship("CityModel", back_populates="countries")
 
 class TargetTypeModel(Base):
-    _tablename_ = 'targettypes'
+    __tablename__ = 'targettypes'
     target_type_id = Column(Integer, primary_key=True)
     target_type_name = Column(String)
 
 class TargetModel(Base):
-    _tablename_ = 'targets'
+    __tablename__ = 'targets'
     target_id = Column(Integer, primary_key=True)
     mission_id = Column(Integer, ForeignKey('mission.mission_id'))
     target_industry = Column(String)
@@ -34,7 +34,7 @@ class TargetModel(Base):
     target_priority = Column(Integer)
 
 class MissionModel(Base):
-    _tablename_ = 'missions'
+    __tablename__ = 'missions'
     mission_id = Column(Integer, primary_key=True)
     mission_date = Column(Date)
     airborne_aircraft = Column(Integer)
