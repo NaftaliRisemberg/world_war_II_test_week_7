@@ -33,8 +33,15 @@ class Mission(SQLAlchemyObjectType):
 class Query(g.ObjectType):
    # return mission by id
     mission_by_id = g.Field(Mission, mission_id=g.Int(required=True))
+   # return the all mission that happened between dates
+    missions_by_range_of_dates = g.List(Mission, date_start=g.Date(required=True), date_end=g.Date(required=True))
 
     def resolve_mission_by_id(self, info, mission_id):
        return db_session.query(MissionModel).get(mission_id)
+
+    def resolve_missions_by_range_of_dates(self, info, date_start, date_end):
+        return db_session.query(MissionModel).filter(MissionModel.mission_date.between(date_start, date_end))
+
+
 
 schema = g.Schema(query=Query)
